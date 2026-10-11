@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends "base.html" %}
+
+{% block title %}
+HealthAI - Dashboard
+{% endblock %}
+
+
+{% block content %}
+
+<div class="dashboard-container">
+
+
+    <!-- HEADER -->
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <p class="small-title">
+                HEALTH DASHBOARD
+            </p>
+
+            <h1>
+                Welcome, {{ session["user_name"] }}
+            </h1>
+
+            <p>
+                Track your previous health assessments.
+            </p>
+
+        </div>
+
+
+        <a href="{{ url_for('diagnosis') }}"
+           class="btn">
+
+            + New Assessment
+
+        </a>
+
+    </div>
+
+
+
+    <!-- STATISTICS -->
+
+    <div class="stats-container">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📋
+            </div>
+
+            <div>
+
+                <h3>
+                    {{ records|length }}
+                </h3>
+
+                <p>
+                    Total Assessments
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🩺
+            </div>
+
+            <div>
+
+                <h3>
+
+                    {% if records %}
+                        {{ records[0]["result"] }}
+                    {% else %}
+                        -
+                    {% endif %}
+
+                </h3>
+
+                <p>
+                    Latest Result
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ⚠️
+            </div>
+
+            <div>
+
+                <h3>
+
+                    {% if records %}
+                        {{ records[0]["risk"] }}
+                    {% else %}
+                        -
+                    {% endif %}
+
+                </h3>
+
+                <p>
+                    Latest Risk
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- GRAPH -->
+
+    <div class="dashboard-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    Risk History
+                </h2>
+
+                <p>
+                    Your previous assessment risk levels
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="chart-container">
+
+            <canvas id="riskChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- HISTORY -->
+
+    <div class="dashboard-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>
+                    Assessment History
+                </h2>
+
+                <p>
+                    Your previous health assessments
+                </p>
+
+            </div>
+
+        </div>
+
+
+        {% if records %}
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Symptoms
+                        </th>
+
+                        <th>
+                            Result
+                        </th>
+
+                        <th>
+                            Risk
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for record in records %}
+
+                    <tr>
+
+                        <td>
+                            {{ record["created_at"] }}
+                        </td>
+
+                        <td>
+                            {{ record["symptoms"] }}
+                        </td>
+
+                        <td>
+                            {{ record["result"] }}
+                        </td>
+
+                        <td>
+
+                            {% if record["risk"] == "High" %}
+
+                                <span class="table-risk high-risk">
+                                    High
+                                </span>
+
+                            {% elif record["risk"] == "Moderate" %}
+
+                                <span class="table-risk moderate-risk">
+                                    Moderate
+                                </span>
+
+                            {% else %}
+
+                                <span class="table-risk low-risk">
+                                    Low
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <div>
+                📊
+            </div>
+
+            <h3>
+                No Assessments Yet
+            </h3>
+
+            <p>
+                Complete your first symptom assessment
+                to see your health history here.
+            </p>
+
+            <a href="{{ url_for('diagnosis') }}"
+               class="btn">
+
+                Start Assessment
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+
+
+<!-- CHART.JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+    const recordsData = JSON.parse('{{ records|tojson|safe }}');
+
+    const labels = recordsData.map(record => record.created_at);
+
+    const riskValues = recordsData.map(record => {
+        if (record.risk === "High") {
+            return 3;
+        }
+
+        if (record.risk === "Moderate") {
+            return 2;
+        }
+
+        return 1;
+    });
+
+
+    const ctx =
+        document.getElementById("riskChart");
+
+
+    new Chart(ctx, {
+
+        type: "line",
+
+        data: {
+
+            labels: labels,
+
+            datasets: [
+
+                {
+
+                    label: "Risk Level",
+
+                    data: riskValues,
+
+                    borderWidth: 3,
+
+                    tension: 0.4,
+
+                    fill: false
+
+                }
+
+            ]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            scales: {
+
+                y: {
+
+                    min: 0,
+
+                    max: 3,
+
+                    ticks: {
+
+                        stepSize: 1,
+
+                        callback: function(value) {
+
+                            if (value === 1) {
+                                return "Low";
+                            }
+
+                            if (value === 2) {
+                                return "Moderate";
+                            }
+
+                            if (value === 3) {
+                                return "High";
+                            }
+
+                            return "";
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+</script>
+
+{% endblock %}
+</body>
+</html>

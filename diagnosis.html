@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends "base.html" %}
+
+{% block title %}
+HealthAI - Symptom Assessment
+{% endblock %}
+
+
+{% block content %}
+
+<div class="diagnosis-container">
+
+    <div class="diagnosis-header">
+
+        <p class="small-title">
+            AI HEALTH ASSESSMENT
+        </p>
+
+        <h1>
+            How are you feeling?
+        </h1>
+
+        <p>
+            Select all the symptoms you are currently experiencing.
+        </p>
+
+    </div>
+
+
+    <form method="POST"
+          action="{{ url_for('diagnosis') }}"
+          class="symptom-form">
+
+
+        <!-- GENERAL SYMPTOMS -->
+
+        <div class="symptom-section">
+
+            <h2>
+                General Symptoms
+            </h2>
+
+            <div class="symptom-grid">
+
+
+                <label class="symptom-card">
+
+                    <input
+                        type="checkbox"
+                        name="symptoms"
+                        value="fever"
+                    >
+
+                    <span class="symptom-icon">
+                        🌡️
+                    </span>
+
+                    <span>
+                        Fever
+                    </span>
+
+                </label>
+
+
+                <label class="symptom-card">
+
+                    <input
+                        type="checkbox"
+                        name="symptoms"
+                        value="fatigue"
+                    >
+
+                    <span class="symptom-icon">
+                        😴
+                    </span>
+
+                    <span>
+                        Fatigue
+                    </span>
+
+                </label>
+
+
+                <label class="symptom-card">
+
+                    <input
+                        type="checkbox"
+                        name="symptoms"
+                        value="headache"
+                    >
+
+                    <span class="symptom-icon">
+                        🤕
+                    </span>
+
+                    <span>
+                        Headache
+                    </span>
+
+                </label>
+
+
+                <label class="symptom-card">
+
+                    <input
+                        type="checkbox"
+                        name="symptoms"
+                        value="body_pain"
+                    >
+
+                    <span class="symptom-icon">
+                        🦴
+                    </span>
+
+                    <span>
+                        Body Pain
+                    </span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- RESPIRATORY SYMPTOMS -->
+
+        <div class="symptom-section">
+
+            <h2>
+                Respiratory Symptoms
+            </h2>
+
+            <div class="symptom-grid">
+
+
+                <label class="symptom-card">
+
+                    <input
+                        type="checkbox"
+                        name="symptoms"
+                        value="cough"
+                    >
+
+                    <span class="symptom-icon">
+                        😷
+                    </span>
+
+                    <span>
+                        Cough
+                    </span>
+
+                </label>
+
+
+                <label class="symptom-card">
+
+                    <input
+                        type="checkbox"
+                        name="symptoms"
+                        value="sore_throat"
+                    >
+
+                    <span class="symptom-icon">
+                        🗣️
+                    </span>
+
+                    <span>
+                        Sore Throat
+                    </span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- DIGESTIVE SYMPTOMS -->
+
+        <div class="symptom-section">
+
+            <h2>
+                Digestive Symptoms
+            </h2>
+
+            <div class="symptom-grid">
+
+
+                <label class="symptom-card">
+
+                    <input
+                        type="checkbox"
+                        name="symptoms"
+                        value="nausea"
+                    >
+
+                    <span class="symptom-icon">
+                        🤢
+                    </span>
+
+                    <span>
+                        Nausea
+                    </span>
+
+                </label>
+
+
+                <label class="symptom-card">
+
+                    <input
+                        type="checkbox"
+                        name="symptoms"
+                        value="vomiting"
+                    >
+
+                    <span class="symptom-icon">
+                        🤮
+                    </span>
+
+                    <span>
+                        Vomiting
+                    </span>
+
+                </label>
+
+
+                <label class="symptom-card">
+
+                    <input
+                        type="checkbox"
+                        name="symptoms"
+                        value="stomach_pain"
+                    >
+
+                    <span class="symptom-icon">
+                        🤕
+                    </span>
+
+                    <span>
+                        Stomach Pain
+                    </span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- OTHER -->
+
+        <div class="symptom-section">
+
+            <h2>
+                Other Symptoms
+            </h2>
+
+            <div class="symptom-grid">
+
+
+                <label class="symptom-card">
+
+                    <input
+                        type="checkbox"
+                        name="symptoms"
+                        value="dizziness"
+                    >
+
+                    <span class="symptom-icon">
+                        🌀
+                    </span>
+
+                    <span>
+                        Dizziness
+                    </span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- DISCLAIMER -->
+
+        <div class="diagnosis-warning">
+
+            <strong>
+                ⚠ Important
+            </strong>
+
+            <p>
+                This assessment provides preliminary educational
+                information only. It is not a medical diagnosis.
+            </p>
+
+        </div>
+
+
+        <!-- SUBMIT -->
+
+        <div class="diagnosis-submit">
+
+            <button type="submit"
+                    class="btn">
+
+                Analyze My Symptoms
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
+</body>
+</html>

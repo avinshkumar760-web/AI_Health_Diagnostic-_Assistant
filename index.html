@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends "base.html" %}
+
+{% block title %}
+HealthAssitant - Home
+{% endblock %}
+
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="small-title">
+            AI-POWERED HEALTH ASSISTANT
+        </p>
+
+        <h1>
+            Understand Your
+            <span>Health Better.</span>
+        </h1>
+
+        <p class="hero-text">
+
+            HealthAI provides a preliminary
+            symptom-based health assessment
+            using an intelligent scoring system.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            {% if session.get("user_id") %}
+
+                <a href="{{ url_for('diagnosis') }}"
+                   class="btn">
+
+                    Check Symptoms
+
+                </a>
+
+                <a href="{{ url_for('dashboard') }}"
+                   class="btn secondary-btn">
+
+                    Dashboard
+
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('register') }}"
+                   class="btn">
+
+                    Get Started
+
+                </a>
+
+                <a href="{{ url_for('login') }}"
+                   class="btn secondary-btn">
+
+                    Login
+
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-card">
+
+        <div class="medical-icon">
+            🩺
+        </div>
+
+        <h2>
+            Smart Health Assessment
+        </h2>
+
+        <p>
+            Symptoms → AI Analysis → Risk Level
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- FEATURES -->
+
+<section class="features">
+
+    <h2>
+        What HealthAI Provides
+    </h2>
+
+
+    <div class="feature-container">
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🔍
+            </div>
+
+            <h3>
+                Symptom Analysis
+            </h3>
+
+            <p>
+                Select your symptoms and
+                get a preliminary health assessment.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🤖
+            </div>
+
+            <h3>
+                AI Assistance
+            </h3>
+
+            <p>
+                An intelligent scoring system
+                analyzes the selected symptoms.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📊
+            </div>
+
+            <h3>
+                Health Dashboard
+            </h3>
+
+            <p>
+                Track your previous assessments
+                and monitor your health history.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- HOW IT WORKS -->
+
+<section class="how-it-works">
+
+    <h2>
+        How It Works
+    </h2>
+
+
+    <div class="steps">
+
+
+        <div class="step">
+
+            <span>
+                01
+            </span>
+
+            <h3>
+                Create Account
+            </h3>
+
+            <p>
+                Register and create your
+                personal HealthAI account.
+            </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+            <span>
+                02
+            </span>
+
+            <h3>
+                Select Symptoms
+            </h3>
+
+            <p>
+                Select the symptoms you
+                are currently experiencing.
+            </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+            <span>
+                03
+            </span>
+
+            <h3>
+                Get Assessment
+            </h3>
+
+            <p>
+                Our system analyzes your
+                symptoms and generates a result.
+            </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+            <span>
+                04
+            </span>
+
+            <h3>
+                Track History
+            </h3>
+
+            <p>
+                View previous assessments
+                from your dashboard.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- DISCLAIMER -->
+
+<section class="disclaimer">
+
+    <h3>
+        ⚠ Important
+    </h3>
+
+    <p>
+
+        HealthAI provides a preliminary,
+        educational assessment only.
+        It is not a medical diagnosis and
+        should not replace advice from
+        a qualified healthcare professional.
+
+    </p>
+
+</section>
+
+{% endblock %}
+</body>
+</html>
